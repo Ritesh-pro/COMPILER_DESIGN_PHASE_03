@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lexical Analyzer</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+<header>
+    <h1>Lexical Analyzer using C</h1>
+</header>
+
+<nav class="navbar">
+    <a href="index.html" class="nav-link">
+        <i class="fas fa-home"></i> Home
+    </a>
+    <a href="lexical.html" class="nav-link active">
+        <i class="fas fa-code"></i> Lexical Analyzer
+    </a>
+    <a href="algorithm.html" class="nav-link">
+        <i class="fas fa-flowchart"></i> Algorithm
+    </a>
+</nav>
+
+<section>
+
+<h3>Source Code:</h3>
+
+<pre>
+#include <stdio.h>
+#include <ctype.h>
+#include <string.h>
+
+int isKeyword(char word[]) {
+    char keywords[][10] = {
+        "int", "float", "if", "else", "while", "return", "for", "char", "double"
+    };
+
+    for (int i = 0; i < 9; i++) {
+        if (strcmp(word, keywords[i]) == 0)
+            return 1;
+    }
+    return 0;
+}
+
+int main() {
+    char input[100], word[50];
+    int i = 0, j;
+
+    printf("Enter source code line:\n");
+    fgets(input, sizeof(input), stdin);
+
+    while (input[i] != '\0') {
+
+        // If alphabet -> Identifier or Keyword
+        if (isalpha(input[i])) {
+            j = 0;
+            while (isalnum(input[i])) {
+                word[j++] = input[i++];
+            }
+            word[j] = '\0';
+
+            if (isKeyword(word))
+                printf("%s -> Keyword\n", word);
+            else
+                printf("%s -> Identifier\n", word);
+        }
+
+        // If digit -> Number
+        else if (isdigit(input[i])) {
+            j = 0;
+            while (isdigit(input[i])) {
+                word[j++] = input[i++];
+            }
+            word[j] = '\0';
+            printf("%s -> Number\n", word);
+        }
+
+        // Operators
+        else if (strchr("+-*/=<>", input[i])) {
+            printf("%c -> Operator\n", input[i]);
+            i++;
+        }
+
+        // Special Symbols
+        else if (strchr(";,(){}[]", input[i])) {
+            printf("%c -> Special Symbol\n", input[i]);
+            i++;
+        }
+
+        else {
+            i++;  // Skip spaces or unknown characters
+        }
+    }
+
+    return 0;
+}
+</pre>
+
+<h3>Sample Output:</h3>
+
+<pre>
+Enter source code line:
+int a=10;
+
+int -> Keyword
+a -> Identifier
+= -> Operator
+10 -> Number
+; -> Special Symbol
+</pre>
+
+</section>
+
+<footer>
+    <p>&copy; 2026 Lexical Analyzer | Compiler Design</p>
+</footer>
+
+</body>
+</html>

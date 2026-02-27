@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lexical Analyzer Algorithm</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+<header>
+    <h1>Lexical Analyzer Algorithm</h1>
+</header>
+
+<nav class="navbar">
+    <a href="index.html" class="nav-link">
+        <i class="fas fa-home"></i> Home
+    </a>
+    <a href="lexical.html" class="nav-link">
+        <i class="fas fa-code"></i> Lexical Analyzer
+    </a>
+    <a href="algorithm.html" class="nav-link active">
+        <i class="fas fa-flowchart"></i> Algorithm
+    </a>
+</nav>
+
+<section>
+
+<h3>Algorithm:</h3>
+
+<pre>
+LEXICAL_ANALYZER_ALGORITHM:
+├── Step 1: Initialize
+│   ├── Read source code input
+│   ├── Set index i = 0, word array j = 0
+│   └── Create keywords list: {int, float, if, else, while, return, for, char, double}
+│
+├── Step 2: Main Loop (while input[i] != '\0')
+│   │
+│   ├── Condition 1: If isalpha(input[i])
+│   │   ├── Extract word characters: while isalnum(input[i])
+│   │   ├── Null terminate word
+│   │   ├── Check if isKeyword(word)
+│   │   │   ├── YES → Print: word -> Keyword
+│   │   │   └── NO  → Print: word -> Identifier
+│   │   └── Continue to next character
+│   │
+│   ├── Condition 2: Else if isdigit(input[i])
+│   │   ├── Extract digits: while isdigit(input[i])
+│   │   ├── Null terminate number
+│   │   ├── Print: number -> Number
+│   │   └── Continue to next character
+│   │
+│   ├── Condition 3: Else if strchr("+-*/=<>", input[i])
+│   │   ├── Print: input[i] -> Operator
+│   │   └── Move to next character (i++)
+│   │
+│   ├── Condition 4: Else if strchr(";,(){}[]", input[i])
+│   │   ├── Print: input[i] -> Special Symbol
+│   │   └── Move to next character (i++)
+│   │
+│   └── Condition 5: Else
+│       ├── Skip spaces or unknown characters
+│       └── Move to next character (i++)
+│
+└── Step 3: Return
+    └── Program ends successfully (return 0)
+
+ISKEYWORD Function:
+├── Compare given word with keyword list
+├── If match found → return 1 (TRUE)
+└── If no match → return 0 (FALSE)
+</pre>
+
+<h3>Example Execution:</h3>
+
+<pre>
+Input: int a=10;
+
+Step-by-Step Execution:
+1. Read: 'i' -> isalpha() → Extract "int"
+   Compare with keywords → MATCH → Output: int -> Keyword
+
+2. Read: ' ' (space) → Skip
+
+3. Read: 'a' -> isalpha() → Extract "a"
+   Compare with keywords → NO MATCH → Output: a -> Identifier
+
+4. Read: '=' -> strchr("+-*/=<>") → Output: = -> Operator
+
+5. Read: '1' -> isdigit() → Extract "10"
+   → Output: 10 -> Number
+
+6. Read: ';' -> strchr(";,(){}[]") → Output: ; -> Special Symbol
+
+7. Read: '\0' (end of string) → Loop terminates
+</pre>
+
+<h3>Time Complexity:</h3>
+
+<pre>
+- Single pass through input: O(n)
+  where n = length of input string
+
+- For each character:
+  * Digit extraction: O(d) where d = digits in number
+  * Word extraction: O(w) where w = length of identifier
+  * Keyword lookup: O(k) where k = number of keywords
+
+Overall Complexity: O(n) (Linear)
+Space Complexity: O(1) (fixed keyword array)
+</pre>
+
+</section>
+
+<footer>
+    <p>&copy; 2026 Lexical Analyzer | Compiler Design</p>
+</footer>
+
+</body>
+</html>
